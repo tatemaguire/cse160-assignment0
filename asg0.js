@@ -66,10 +66,50 @@ function handleDrawEvent() {
   drawVector(v2, "blue");
 }
 
-// called when user presses draw_operation_button
-//gets input and draws v1 and v2 as well as operation result in green
+// Called when user presses draw_operation_button
+// Gets input and draws v1 and v2 as well as operation result in green
 function handleDrawOperationEvent() {
+  // Retrieve vector input
+  var [v1, v2] = getVectorInput();
 
+  // Get operation type and scalar from input
+  var operation_type = document.getElementById('operation_type').value;
+  var scalar = document.getElementById('operation_scalar').value;
+  
+  // Declare v3 and v4 for results
+  var v3, v4;
+
+  // Perform operation on v1 v2
+  switch (operation_type) {
+    case "add":
+      v3 = new Vector3(v1.elements);
+      v3.add(v2);
+      break;
+    case "sub":
+      v3 = new Vector3(v1.elements);
+      v3.sub(v2);
+      break;
+    case "mul":
+      v3 = new Vector3(v1.elements);
+      v3.mul(scalar);
+      v4 = new Vector3(v2.elements);
+      v4.mul(scalar);
+      break;
+    case "div":
+      v3 = new Vector3(v1.elements);
+      v3.div(scalar);
+      v4 = new Vector3(v2.elements);
+      v4.div(scalar);
+      break;
+  }
+
+  // Draw input vectors
+  drawVector(v1, "red");
+  drawVector(v2, "blue");
+
+  // Draw result vectors
+  if (v3) drawVector(v3, "green");
+  if (v4) drawVector(v4, "green");
 }
 
 // Get vector input from v1 and v2, and return them as Vector3s

@@ -5,7 +5,7 @@
     <title>Draw a blue rectangle (canvas version)</title>
   </head>
 
-  <body onload="main()">
+  <body onload="main()" style="line-height: 2rem;">
     <canvas id="example" width="400" height="400">
       Please use a browser that supports "canvas"
     </canvas>
@@ -19,10 +19,25 @@
     v2:
     x <input type="number" id="x2_input" value="5" style="width: 100px;" />
     y <input type="number" id="y2_input" value="3" style="width: 100px;" />
-    <br><br>
+    <br>
 
     <input type="button" id="draw_button" value="Draw" />
+    <br><hr>
+
+    Operation:
+    <select id="operation_type">
+      <option value="add">Add</option>
+      <option value="sub">Subtract</option>
+      <option value="mul">Multiply</option>
+      <option value="div">Divide</option>
+    </select>
     
+    Scalar:
+    <input type="number" id="operation_scalar" value="1" style="width: 100px;" />
+    <br>
+
+    <input type="button" id="draw_operation_button" value="Draw" />
+
     <script src="lib/cuon-matrix-cse160.js"></script>
     <script src="asg0.js"></script>
   </body>

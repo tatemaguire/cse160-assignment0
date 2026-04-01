@@ -15,15 +15,19 @@ function main() {
   ctx = canvas.getContext('2d');
   
   // Set canvas center
-  canvas_center = new Vector3(
-    [Math.floor(canvas.width / 2), 
-      Math.floor(canvas.height / 2),
-      0]
-    );
+  canvas_center = new Vector3([
+    Math.floor(canvas.width / 2), 
+    Math.floor(canvas.height / 2),
+    0,
+  ]);
     
   // Retrieve draw button and setup callback
   var draw_button = document.getElementById('draw_button');
   draw_button.addEventListener("click", handleDrawEvent);
+
+  // Retrieve draw operation button and setup callback
+  var draw_operation_button = document.getElementById('draw_operation_button');
+  draw_operation_button.addEventListener("click", handleDrawOperationEvent);
 
   // Initialize canvas
   handleDrawEvent();
@@ -47,6 +51,8 @@ function drawVector(v, color) {
   ctx.stroke();
 }
 
+// called when user presses draw_button
+// gets input and draws v1 and v2
 function handleDrawEvent() {
   // Clear canvas
   ctx.fillStyle = "black";
@@ -65,4 +71,10 @@ function handleDrawEvent() {
   // Create and draw v2
   var v2 = new Vector3([x2, y2, 0]);
   drawVector(v2, "blue");
+}
+
+// called when user presses draw_operation_button
+//gets input and draws v1 and v2 as well as operation result in green
+function handleDrawOperationEvent() {
+  console.log("hiii");
 }

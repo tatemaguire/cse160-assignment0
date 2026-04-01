@@ -62,9 +62,6 @@ function handleDrawEvent() {
   // Draw vectors
   drawVector(v1, "red");
   drawVector(v2, "blue");
-
-  let v3 = Vector3.cross(v1, v2);
-  console.log(v3);
 }
 
 // Called when user presses draw_operation_button
@@ -142,6 +139,11 @@ function handleDrawOperationEvent() {
       console.log("Angle:", a);
 
       break;
+    case "areaTriangle":
+      let A = areaTriangle(v1, v2);
+      console.log("Area of the triangle:", A);
+
+      break;
   }
   
   // ------- 3. Draw ----------
@@ -187,4 +189,9 @@ function angleBetween(v1, v2) {
   // convert to degrees
   a = a * 180 / Math.PI;
   return a;
+}
+
+// Get area of the triangle formed by the two vectors
+function areaTriangle(v1, v2) {
+    return Vector3.cross(v1, v2).magnitude() / 2;
 }

@@ -13,13 +13,18 @@ function main() {
 
   // Get the rendering context for 2DCG
   ctx = canvas.getContext('2d');
-
+  
   // Set canvas center
   canvas_center = new Vector3(
     [Math.floor(canvas.width / 2), 
-     Math.floor(canvas.height / 2),
-     0]
-  );
+      Math.floor(canvas.height / 2),
+      0]
+    );
+    
+  // Retrieve draw button and setup callback
+  var draw_button = document.getElementById('draw_button');
+  draw_button.addEventListener("click", handleDrawEvent);
+
 
   // Draw background
   ctx.fillStyle = "black";
@@ -28,7 +33,6 @@ function main() {
   // Draw a red vector
   var v1 = new Vector3([1, 1, 0]);
   drawVector(v1, "red");
-  console.log(v1);
 
 }
 
@@ -42,10 +46,23 @@ function drawVector(v, color) {
   // Scale *20, reflect on y axis
   offset[0] *= 20;
   offset[1] *= -20;
-  console.log(offset);
 
   ctx.beginPath();
   ctx.moveTo(start[0], start[1]);
   ctx.lineTo(start[0] + offset[0], start[1] + offset[1]);
   ctx.stroke();
+}
+
+function handleDrawEvent() {
+  // Clear canvas
+  ctx.fillStyle = "black";
+  ctx.fillRect(0, 0, 400, 400);
+
+  // Retrieve input values
+  var x_value = document.getElementById("x_input").value;
+  var y_value = document.getElementById("y_input").value;
+
+  // Create and draw vector
+  var v1 = new Vector3([x_value, y_value, 0]);
+  drawVector(v1, "red");
 }

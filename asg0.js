@@ -58,23 +58,31 @@ function handleDrawEvent() {
   ctx.fillStyle = "black";
   ctx.fillRect(0, 0, 400, 400);
 
-  // Retrieve input values
-  var x1 = document.getElementById("x1_input").value;
-  var y1 = document.getElementById("y1_input").value;
-  var x2 = document.getElementById("x2_input").value;
-  var y2 = document.getElementById("y2_input").value;
+  // Retrieve vector input
+  var [v1, v2] = getVectorInput();
 
-  // Create and draw v1
-  var v1 = new Vector3([x1, y1, 0]);
+  // Draw vectors
   drawVector(v1, "red");
-
-  // Create and draw v2
-  var v2 = new Vector3([x2, y2, 0]);
   drawVector(v2, "blue");
 }
 
 // called when user presses draw_operation_button
 //gets input and draws v1 and v2 as well as operation result in green
 function handleDrawOperationEvent() {
-  console.log("hiii");
+
+}
+
+// Get vector input from v1 and v2, and return them as Vector3s
+function getVectorInput() {
+  // Retrieve input values
+  var x1 = document.getElementById("x1_input").value;
+  var y1 = document.getElementById("y1_input").value;
+  var x2 = document.getElementById("x2_input").value;
+  var y2 = document.getElementById("y2_input").value;
+
+  // Create vectors from input
+  var v1 = new Vector3([x1, y1, 0]);
+  var v2 = new Vector3([x2, y2, 0]);
+
+  return [v1, v2];
 }

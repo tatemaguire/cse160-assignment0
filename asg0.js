@@ -1,11 +1,10 @@
 // Globals
-var ctx;
-var canvas_center;
+var canvas, ctx, canvas_center;
 
 // DrawTriangle.js (c) 2012 matsuda
 function main() {  
   // Retrieve <canvas> element
-  var canvas = document.getElementById('example');  
+  canvas = document.getElementById('example');  
   if (!canvas) { 
     console.log('Failed to retrieve the <canvas> element');
     return false; 
@@ -54,9 +53,7 @@ function drawVector(v, color) {
 // called when user presses draw_button
 // gets input and draws v1 and v2
 function handleDrawEvent() {
-  // Clear canvas
-  ctx.fillStyle = "black";
-  ctx.fillRect(0, 0, 400, 400);
+  clearCanvas();
 
   // Retrieve vector input
   var [v1, v2] = getVectorInput();
@@ -69,23 +66,28 @@ function handleDrawEvent() {
 // Called when user presses draw_operation_button
 // Gets input and draws v1 and v2 as well as operation result in green
 function handleDrawOperationEvent() {
+
+  // --------- 1. Get Input ----------
+
   // Retrieve vector input
   var [v1, v2] = getVectorInput();
 
   // Get operation type and scalar from input
   var operation_type = document.getElementById('operation_type').value;
   var scalar = document.getElementById('operation_scalar').value;
-  
+
+  // --------- 2. Calculate ------------
+
   // Declare v3 and v4 for results
   var v3, v4;
-
+  
   // Perform operation on v1 v2
   switch (operation_type) {
     case "add":
       v3 = new Vector3();
       v3.set(v1);
       v3.add(v2);
-      
+
       break;
     case "sub":
       v3 = new Vector3();
@@ -114,6 +116,10 @@ function handleDrawOperationEvent() {
 
       break;
   }
+  
+  // ------- 3. Draw ----------
+
+  clearCanvas();
 
   // Draw input vectors
   drawVector(v1, "red");
@@ -137,4 +143,9 @@ function getVectorInput() {
   var v2 = new Vector3([x2, y2, 0]);
 
   return [v1, v2];
+}
+
+function clearCanvas() {
+  ctx.fillStyle = "black";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
 }

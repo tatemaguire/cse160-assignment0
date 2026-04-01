@@ -82,24 +82,36 @@ function handleDrawOperationEvent() {
   // Perform operation on v1 v2
   switch (operation_type) {
     case "add":
-      v3 = new Vector3(v1.elements);
+      v3 = new Vector3();
+      v3.set(v1);
       v3.add(v2);
+      
       break;
     case "sub":
-      v3 = new Vector3(v1.elements);
+      v3 = new Vector3();
+      v3.set(v1);
       v3.sub(v2);
+
       break;
     case "mul":
-      v3 = new Vector3(v1.elements);
+      v3 = new Vector3();
+      v3.set(v1);
       v3.mul(scalar);
-      v4 = new Vector3(v2.elements);
+
+      v4 = new Vector3();
+      v4.set(v2);
       v4.mul(scalar);
+
       break;
     case "div":
-      v3 = new Vector3(v1.elements);
+      v3 = new Vector3();
+      v3.set(v1);
       v3.div(scalar);
-      v4 = new Vector3(v2.elements);
+
+      v4 = new Vector3();
+      v4.set(v2);
       v4.div(scalar);
+
       break;
   }
 

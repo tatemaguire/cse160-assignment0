@@ -25,20 +25,14 @@ function main() {
   var draw_button = document.getElementById('draw_button');
   draw_button.addEventListener("click", handleDrawEvent);
 
-
-  // Draw background
-  ctx.fillStyle = "black";
-  ctx.fillRect(0, 0, 400, 400);
-
-  // Draw a red vector
-  var v1 = new Vector3([1, 1, 0]);
-  drawVector(v1, "red");
-
+  // Initialize canvas
+  handleDrawEvent();
 }
 
 // Draw vector v on canvas from center, with specified color
 function drawVector(v, color) {
   ctx.strokeStyle = color;
+  ctx.lineWidth = 3;
 
   var start = canvas_center.elements;
   var offset = v.elements;
@@ -59,10 +53,16 @@ function handleDrawEvent() {
   ctx.fillRect(0, 0, 400, 400);
 
   // Retrieve input values
-  var x_value = document.getElementById("x_input").value;
-  var y_value = document.getElementById("y_input").value;
+  var x1 = document.getElementById("x1_input").value;
+  var y1 = document.getElementById("y1_input").value;
+  var x2 = document.getElementById("x2_input").value;
+  var y2 = document.getElementById("y2_input").value;
 
-  // Create and draw vector
-  var v1 = new Vector3([x_value, y_value, 0]);
+  // Create and draw v1
+  var v1 = new Vector3([x1, y1, 0]);
   drawVector(v1, "red");
+
+  // Create and draw v2
+  var v2 = new Vector3([x2, y2, 0]);
+  drawVector(v2, "blue");
 }

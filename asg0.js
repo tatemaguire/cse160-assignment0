@@ -133,6 +133,11 @@ function handleDrawOperationEvent() {
       v4.normalize();
 
       break;
+    case "angleBetween":
+      let a = angleBetween(v1, v2);
+      console.log("Angle:", a);
+      
+      break;
   }
   
   // ------- 3. Draw ----------
@@ -163,7 +168,13 @@ function getVectorInput() {
   return [v1, v2];
 }
 
+// Clears canvas!!!
 function clearCanvas() {
   ctx.fillStyle = "black";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
+}
+
+// Get angle between two vectors (in degrees)
+function angleBetween(v1, v2) {
+  return 0;
 }

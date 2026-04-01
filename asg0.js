@@ -30,6 +30,7 @@ function main() {
 
   // Initialize canvas
   handleDrawEvent();
+
 }
 
 // Draw vector v on canvas from center, with specified color
@@ -38,7 +39,7 @@ function drawVector(v, color) {
   ctx.lineWidth = 3;
 
   var start = canvas_center.elements;
-  var offset = v.elements;
+  var offset = new Vector3(v.elements).elements;
 
   // Scale *20, reflect on y axis
   offset[0] *= 20;
@@ -61,6 +62,9 @@ function handleDrawEvent() {
   // Draw vectors
   drawVector(v1, "red");
   drawVector(v2, "blue");
+
+  let v3 = Vector3.cross(v1, v2);
+  console.log(v3);
 }
 
 // Called when user presses draw_operation_button

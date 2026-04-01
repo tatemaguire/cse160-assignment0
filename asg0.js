@@ -80,7 +80,7 @@ function handleDrawOperationEvent() {
 
   // Declare v3 and v4 for results
   var v3, v4;
-  
+
   // Perform operation on v1 v2
   switch (operation_type) {
     case "add":
@@ -113,6 +113,24 @@ function handleDrawOperationEvent() {
       v4 = new Vector3();
       v4.set(v2);
       v4.div(scalar);
+
+      break;
+    case "magnitude":
+      let m1 = v1.magnitude();
+      console.log("Magnitude v1:", m1);
+
+      let m2 = v2.magnitude();
+      console.log("Magnitude v2:", m2);
+
+      break;
+    case "normalize":
+      v3 = new Vector3();
+      v3.set(v1);
+      v3.normalize();
+
+      v4 = new Vector3();
+      v4.set(v2);
+      v4.normalize();
 
       break;
   }

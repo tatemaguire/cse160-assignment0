@@ -136,7 +136,7 @@ function handleDrawOperationEvent() {
     case "angleBetween":
       let a = angleBetween(v1, v2);
       console.log("Angle:", a);
-      
+
       break;
   }
   
@@ -176,5 +176,11 @@ function clearCanvas() {
 
 // Get angle between two vectors (in degrees)
 function angleBetween(v1, v2) {
-  return 0;
+  // angle = acos( (v1*v2) / (|v1|*|v2|) )
+  let dot = Vector3.dot(v1, v2);
+  let a = Math.acos( dot / (v1.magnitude() * v2.magnitude()) );
+  
+  // convert to degrees
+  a = a * 180 / Math.PI;
+  return a;
 }

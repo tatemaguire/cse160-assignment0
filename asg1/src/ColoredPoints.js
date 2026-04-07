@@ -108,8 +108,8 @@ function click(ev) {
   var color = getColorInput();
   g_colors.push(color);
 
-  // TODO: 
-  g_sizes.push(10);
+  // Get PointSize value from DOM input, push to g_sizes
+  g_sizes.push(document.getElementById("point_size").value);
 
   renderAllShapes();
 }

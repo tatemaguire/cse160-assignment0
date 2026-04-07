@@ -45,6 +45,14 @@ class Circle {
             verts[vertexI + 1] = Math.sin((segI + 1) * deltaAngle);
         }
 
+        // Translate and scale
+        radius /= 200;
+        for (let i = 0; i < verts.length; i += 2) {
+            verts[i]   = verts[i]   * radius + centerX;
+            verts[i+1] = verts[i+1] * radius + centerY;
+
+        }
+
         this._vertices = verts;
         this._numVertices = n;
     }

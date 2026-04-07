@@ -130,6 +130,11 @@ function drawShapeAtEvent(ev) {
       let tri = new Triangle(x, y, pointSize, color);
       shapesList.push(tri);
       break;
+    case "circle":
+      // draw circle
+      let circle = new Circle(x, y, pointSize, color);
+      shapesList.push(circle);
+      break;
   }
 
   renderAllShapes();

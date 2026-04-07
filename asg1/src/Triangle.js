@@ -15,7 +15,7 @@ class Triangle {
   }
 
   render(gl, a_Position, a_PointSize, u_FragColor) {
-    this.initVertexBuffer(gl, a_Position);
+    this._initVertexBuffer(gl, a_Position);
     let rgba = this.color;
     gl.uniform4f(u_FragColor, rgba[0], rgba[1], rgba[2], rgba[3]);
 
@@ -23,7 +23,7 @@ class Triangle {
     gl.disableVertexAttribArray(a_Position);
   }
 
-  initVertexBuffer(gl, a_Position) {
+  _initVertexBuffer(gl, a_Position) {
     // Triangle shape before offset
     let vertices = new Float32Array([
       0, 0.005,   -0.005, -0.005,   0.005, -0.005

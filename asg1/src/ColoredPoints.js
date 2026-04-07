@@ -127,14 +127,9 @@ function renderAllShapes() {
     let rgba = g_colors[i];
     let size = g_sizes[i];
 
-    // Pass the position of a point to a_Position variable
-    gl.vertexAttrib3f(a_Position, xy[0], xy[1], 0.0);
-    // Pass the size of a point into vertex shader
-    gl.vertexAttrib1f(a_PointSize, size);
-    // Pass the color of a point to u_FragColor variable
-    gl.uniform4f(u_FragColor, rgba[0], rgba[1], rgba[2], rgba[3]);
-    // Draw
-    gl.drawArrays(gl.POINTS, 0, 1);
+    // NEW VERSION
+    let p = new Point(xy[0], xy[1], size, rgba);
+    p.render(gl, a_Position, a_PointSize, u_FragColor);
   }
 }
 

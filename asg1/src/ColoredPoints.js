@@ -1,14 +1,15 @@
 // ColoredPoint.js (c) 2012 matsuda
 // Vertex shader program
-var VSHADER_SOURCE =
+let VSHADER_SOURCE =
   'attribute vec4 a_Position;\n' +
+  'attribute float a_PointSize;\n' +
   'void main() {\n' +
   '  gl_Position = a_Position;\n' +
-  '  gl_PointSize = 10.0;\n' +
+  '  gl_PointSize = a_PointSize;\n' +
   '}\n';
 
 // Fragment shader program
-var FSHADER_SOURCE =
+let FSHADER_SOURCE =
   'precision mediump float;\n' +
   'uniform vec4 u_FragColor;\n' +  // uniform
   'void main() {\n' +
@@ -16,15 +17,19 @@ var FSHADER_SOURCE =
   '}\n';
 
 
-// Global Variables
+// Global References
 let canvas;
 let gl;
+
+// Shader Variable Locations
 let a_Position;
+let a_PointSize;
 let u_FragColor;
 
 // Shape Data
-var g_points = [];  // The array for the position of a mouse press
-var g_colors = [];  // The array to store the color of a point
+let g_points = [];  // The array for the position of a mouse press
+let g_colors = [];  // The array to store the color of a point
+let g_sizes = [];   // The array to store the size of a point
 
 
 function main() {
@@ -65,10 +70,17 @@ function setupShadersWithVariables() {
     return;
   }
 
-  // // Get the storage location of a_Position
+  // Get the storage location of a_Position
   a_Position = gl.getAttribLocation(gl.program, 'a_Position');
   if (a_Position < 0) {
     console.log('Failed to get the storage location of a_Position');
+    return;
+  }
+
+  // Get the storage location of a_PointSize
+  a_PointSize = gl.getAttribLocation(gl.program, 'a_PointSize');
+  if (a_PointSize < 0) {
+    console.log('Failed to get the storage location of a_PointSize');
     return;
   }
 
@@ -96,6 +108,9 @@ function click(ev) {
   var color = getColorInput();
   g_colors.push(color);
 
+  // TODO: 
+  g_sizes.push(10);
+
   renderAllShapes();
 }
 
@@ -106,13 +121,16 @@ function renderAllShapes() {
   gl.clear(gl.COLOR_BUFFER_BIT);
 
   // Draw all points
-  var len = g_points.length;
-  for(var i = 0; i < len; i++) {
-    var xy = g_points[i];
-    var rgba = g_colors[i];
+  let len = g_points.length;
+  for(let i = 0; i < len; i++) {
+    let xy = g_points[i];
+    let rgba = g_colors[i];
+    let size = g_sizes[i];
 
     // Pass the position of a point to a_Position variable
     gl.vertexAttrib3f(a_Position, xy[0], xy[1], 0.0);
+    // Pass the size of a point into vertex shader
+    gl.vertexAttrib1f(a_PointSize, size);
     // Pass the color of a point to u_FragColor variable
     gl.uniform4f(u_FragColor, rgba[0], rgba[1], rgba[2], rgba[3]);
     // Draw

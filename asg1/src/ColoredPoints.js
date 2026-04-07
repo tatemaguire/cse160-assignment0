@@ -22,6 +22,10 @@ let gl;
 let a_Position;
 let u_FragColor;
 
+// Shape Data
+var g_points = [];  // The array for the position of a mouse press
+var g_colors = [];  // The array to store the color of a point
+
 // Setup 'canvas' and 'gl'
 function setupWebGL() {
   // Retrieve <canvas> element
@@ -36,7 +40,7 @@ function setupWebGL() {
 }
 
 // Compile shaders and get variable locations
-function setupShadersAndShaderVariables() {
+function setupShadersWithVariables() {
   // Initialize shaders
   if (!initShaders(gl, VSHADER_SOURCE, FSHADER_SOURCE)) {
     console.log('Failed to intialize shaders.');
@@ -61,7 +65,7 @@ function setupShadersAndShaderVariables() {
 function main() {
   
   setupWebGL();
-  setupShadersAndShaderVariables();
+  setupShadersWithVariables();
 
   // Register function (event handler) to be called on a mouse press
   canvas.onmousedown = click;
@@ -73,13 +77,13 @@ function main() {
   gl.clear(gl.COLOR_BUFFER_BIT);
 }
 
-var g_points = [];  // The array for the position of a mouse press
-var g_colors = [];  // The array to store the color of a point
+// Handle a click event
 function click(ev) {
   var x = ev.clientX; // x coordinate of a mouse pointer
   var y = ev.clientY; // y coordinate of a mouse pointer
   var rect = ev.target.getBoundingClientRect();
 
+  // Translates ClientXY into WebGL space, (-1 to 1)
   x = ((x - rect.left) - canvas.width/2)/(canvas.width/2);
   y = (canvas.height/2 - (y - rect.top))/(canvas.height/2);
 
@@ -94,9 +98,15 @@ function click(ev) {
     g_colors.push([1.0, 1.0, 1.0, 1.0]);  // White
   }
 
+  renderAllShapes();
+}
+
+// Renders all shapes tracked by g_points
+function renderAllShapes() {
   // Clear <canvas>
   gl.clear(gl.COLOR_BUFFER_BIT);
 
+  // Draw all points
   var len = g_points.length;
   for(var i = 0; i < len; i++) {
     var xy = g_points[i];

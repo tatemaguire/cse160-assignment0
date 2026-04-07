@@ -27,9 +27,7 @@ let a_PointSize;
 let u_FragColor;
 
 // Shape Data
-let g_points = [];  // The array for the position of a mouse press
-let g_colors = [];  // The array to store the color of a point
-let g_sizes = [];   // The array to store the size of a point
+let g_points = [];
 
 
 function main() {
@@ -94,22 +92,20 @@ function setupShadersWithVariables() {
 
 // Handle a click event
 function click(ev) {
-  var x = ev.clientX; // x coordinate of a mouse pointer
-  var y = ev.clientY; // y coordinate of a mouse pointer
-  var rect = ev.target.getBoundingClientRect();
+  let x = ev.clientX; // x coordinate of a mouse pointer
+  let y = ev.clientY; // y coordinate of a mouse pointer
+  let rect = ev.target.getBoundingClientRect();
 
   // Translates ClientXY into WebGL space, (-1 to 1)
   x = ((x - rect.left) - canvas.width/2)/(canvas.width/2);
   y = (canvas.height/2 - (y - rect.top))/(canvas.height/2);
 
-  // Store the coordinates to g_points array
-  g_points.push([x, y]);
-  // Get color from HTML DOM
-  var color = getColorInput();
-  g_colors.push(color);
-
-  // Get PointSize value from DOM input, push to g_sizes
-  g_sizes.push(document.getElementById("point_size").value);
+  // Get color and pointSize from HTML input
+  let color = getColorInput();
+  let pointSize = document.getElementById("point_size").value;
+  // Create point and add to shapes list
+  let point = new Point(x, y, pointSize, color);
+  g_points.push(point);
 
   renderAllShapes();
 }
@@ -121,15 +117,8 @@ function renderAllShapes() {
   gl.clear(gl.COLOR_BUFFER_BIT);
 
   // Draw all points
-  let len = g_points.length;
-  for(let i = 0; i < len; i++) {
-    let xy = g_points[i];
-    let rgba = g_colors[i];
-    let size = g_sizes[i];
-
-    // NEW VERSION
-    let p = new Point(xy[0], xy[1], size, rgba);
-    p.render(gl, a_Position, a_PointSize, u_FragColor);
+  for (let point of g_points) {
+    point.render(gl, a_Position, a_PointSize, u_FragColor);
   }
 }
 

@@ -24,17 +24,21 @@ class Circle {
 
     // Calculate vertices and store them in _vertices, _numVertices
     _calculateVertices(centerX, centerY, radius, segments) {
-        let verts = new Float32Array(2 * (segments+1));
+        let n = segments + 2;
+        let verts = new Float32Array(2 * n);
+
         // Set center vertex
         verts[0] = 0; verts[1] = 0;
         // Set righthand starting vertex
         verts[2] = 1; verts[3] = 0;
+
         // Calculate angle between each vertex
         let deltaAngle = (2 * Math.PI) / segments;
+
         // Set all other vertices
         for (let segI = 0; segI < segments; segI++) {
             // Calculate index of the x-component of this vertex
-            let vertexI = (segI * 2) + 4;
+            let vertexI = 2 * (segI + 2);
 
             // Set vertex coordinates based on segI
             verts[vertexI]     = Math.cos((segI + 1) * deltaAngle);
@@ -42,7 +46,7 @@ class Circle {
         }
 
         this._vertices = verts;
-        this._numVertices = segments+1;
+        this._numVertices = n;
     }
 
     // Initialize buffers with vertex data, assigned to a_Position

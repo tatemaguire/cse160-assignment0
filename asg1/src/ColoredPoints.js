@@ -38,6 +38,8 @@ function main() {
   // Register function (event handler) to be called on a mouse press
   canvas.onmousedown = click;
 
+  document.getElementById("clear_button").onmousedown = clearCanvas;
+
   // Specify the color for clearing <canvas>
   gl.clearColor(0.0, 0.0, 0.0, 1.0);
 
@@ -133,4 +135,11 @@ function getColorInput() {
   color[3] = 1;
 
   return color;
+}
+
+
+// empties shapesList and redraws
+function clearCanvas() {
+  shapesList = [];
+  renderAllShapes();
 }

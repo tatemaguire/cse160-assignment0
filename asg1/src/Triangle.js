@@ -3,6 +3,9 @@ class Triangle {
   centerY;
   color;
 
+  _vertexBuffer;
+  _numVertices = 3;
+
   constructor(centerX, centerY, color) {
     this.centerX = centerX;
     this.centerY = centerY;
@@ -10,29 +13,33 @@ class Triangle {
   }
 
   render(gl, a_Position, a_PointSize, u_FragColor) {
-    let n = initVertexBuffers(gl, a_Position);
-    gl.drawArrays(gl.TRIANGLES, 0, n);
+    this.initVertexBuffer(gl, a_Position);
+    let rgba = this.color;
+    gl.uniform4f(u_FragColor, rgba[0], rgba[1], rgba[2], rgba[3]);
+    gl.drawArrays(gl.TRIANGLES, 0, this._numVertices);
+    gl.disableVertexAttribArray(a_Position);
   }
 
-  initVertexBuffers(gl, a_Position) {
-    var n = 3; // The number of vertices
-    var vertices = new Float32Array([
+  initVertexBuffer(gl, a_Position) {
+    // Triangle shape before offset
+    let vertices = new Float32Array([
       0, 0.5,   -0.5, -0.5,   0.5, -0.5
     ]);
+    // Apply centerXY offset
     for (let i = 0; i < vertices.length; i += 2) {
       vertices[i] += this.centerX;
       vertices[i+1] += this.centerY;
     }
 
     // Create a buffer object
-    var vertexBuffer = gl.createBuffer();
-    if (!vertexBuffer) {
+    this._vertexBuffer = gl.createBuffer();
+    if (!this._vertexBuffer) {
       console.log('Failed to create the buffer object');
       return -1;
     }
 
     // Bind the buffer object to target
-    gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+    gl.bindBuffer(gl.ARRAY_BUFFER, this._vertexBuffer);
     // Write date into the buffer object
     gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
 
@@ -41,7 +48,5 @@ class Triangle {
 
     // Enable the assignment to a_Position variable
     gl.enableVertexAttribArray(a_Position);
-
-    return n;
   }
 }

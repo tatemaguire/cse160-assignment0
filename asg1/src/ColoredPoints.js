@@ -132,7 +132,7 @@ function drawShapeAtEvent(ev) {
       break;
     case "circle":
       // draw circle
-      let circle = new Circle(x, y, pointSize, color);
+      let circle = new Circle(x, y, pointSize, 20, color);
       shapesList.push(circle);
       break;
   }

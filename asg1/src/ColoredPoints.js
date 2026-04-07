@@ -115,24 +115,25 @@ function drawShapeAtEvent(ev) {
 
   // Get all HTML input
   let color = getColorInput();
-  let pointSize = document.getElementById("point_size").value;
+  let shapeSize = document.getElementById("shape_size").value;
+  let circleSegments = document.getElementById("segments").value;
   let toolSelection = document.getElementById("tool_selection").value;
 
   // Add shape to shapesList depending on tool selection
   switch (toolSelection) {
     case "point":
       // draw point
-      let point = new Point(x, y, pointSize, color);
+      let point = new Point(x, y, shapeSize, color);
       shapesList.push(point);
       break;
     case "triangle":
       // draw triangle
-      let tri = new Triangle(x, y, pointSize, color);
+      let tri = new Triangle(x, y, shapeSize, color);
       shapesList.push(tri);
       break;
     case "circle":
       // draw circle
-      let circle = new Circle(x, y, pointSize, 20, color);
+      let circle = new Circle(x, y, shapeSize, circleSegments, color);
       shapesList.push(circle);
       break;
   }

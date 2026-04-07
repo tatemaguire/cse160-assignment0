@@ -46,6 +46,9 @@ function main() {
 
   // Clear <canvas>
   gl.clear(gl.COLOR_BUFFER_BIT);
+
+  let tri = new Triangle(0, 0, [1, 1, 1, 1]);
+  tri.render(gl, a_Position, a_PointSize, u_FragColor);
 }
 
 

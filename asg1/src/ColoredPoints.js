@@ -36,7 +36,7 @@ function main() {
   setupShadersWithVariables();
 
   // Register function (event handler) to be called on a mouse press
-  canvas.onmousedown = drawPointAtEvent;
+  canvas.onmousedown = drawShapeAtEvent;
   canvas.onmousemove = handleMouseMotion;
 
   document.getElementById("clear_button").onmousedown = clearCanvas;
@@ -46,9 +46,6 @@ function main() {
 
   // Clear <canvas>
   gl.clear(gl.COLOR_BUFFER_BIT);
-
-  let tri = new Triangle(0, 0, [1, 0.1, 1, 1]);
-  tri.render(gl, a_Position, a_PointSize, u_FragColor);
 }
 
 
@@ -100,14 +97,14 @@ function setupShadersWithVariables() {
 // Handle mouse motion. can forward event to drawPointAtEvent
 function handleMouseMotion(ev) {
   if (ev.buttons === 1) {
-    drawPointAtEvent(ev);
+    drawShapeAtEvent(ev);
   }
 }
 
 
 // Handle a click event
 // Draws point at mouse position of event
-function drawPointAtEvent(ev) {
+function drawShapeAtEvent(ev) {
   let x = ev.clientX; // x coordinate of a mouse pointer
   let y = ev.clientY; // y coordinate of a mouse pointer
   let rect = ev.target.getBoundingClientRect();
@@ -116,12 +113,23 @@ function drawPointAtEvent(ev) {
   x = ((x - rect.left) - canvas.width/2)/(canvas.width/2);
   y = (canvas.height/2 - (y - rect.top))/(canvas.height/2);
 
-  // Get color and pointSize from HTML input
+  // Get all HTML input
   let color = getColorInput();
   let pointSize = document.getElementById("point_size").value;
-  // Create point and add to shapes list
-  let point = new Point(x, y, pointSize, color);
-  shapesList.push(point);
+  let toolSelection = document.getElementById("tool_selection").value;
+
+  // Add shape to shapesList depending on tool selection
+  switch (toolSelection) {
+    case "point":
+      // draw point
+      let point = new Point(x, y, pointSize, color);
+      shapesList.push(point);
+      break;
+    case "triangle":
+      let tri = new Triangle(x, y, color);
+      shapesList.push(tri);
+      break;
+  }
 
   renderAllShapes();
 }
@@ -133,8 +141,8 @@ function renderAllShapes() {
   gl.clear(gl.COLOR_BUFFER_BIT);
 
   // Draw all points
-  for (let point of shapesList) {
-    point.render(gl, a_Position, a_PointSize, u_FragColor);
+  for (let shape of shapesList) {
+    shape.render(gl, a_Position, a_PointSize, u_FragColor);
   }
 }
 

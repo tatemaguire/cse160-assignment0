@@ -27,7 +27,7 @@ let a_PointSize;
 let u_FragColor;
 
 // Shape Data
-let g_points = [];
+let shapesList = [];
 
 
 function main() {
@@ -105,19 +105,19 @@ function click(ev) {
   let pointSize = document.getElementById("point_size").value;
   // Create point and add to shapes list
   let point = new Point(x, y, pointSize, color);
-  g_points.push(point);
+  shapesList.push(point);
 
   renderAllShapes();
 }
 
 
-// Renders all shapes tracked by g_points
+// Renders all shapes tracked by shapesList
 function renderAllShapes() {
   // Clear <canvas>
   gl.clear(gl.COLOR_BUFFER_BIT);
 
   // Draw all points
-  for (let point of g_points) {
+  for (let point of shapesList) {
     point.render(gl, a_Position, a_PointSize, u_FragColor);
   }
 }

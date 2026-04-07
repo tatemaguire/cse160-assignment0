@@ -26,6 +26,23 @@ let u_FragColor;
 var g_points = [];  // The array for the position of a mouse press
 var g_colors = [];  // The array to store the color of a point
 
+
+function main() {
+
+  setupWebGL();
+  setupShadersWithVariables();
+
+  // Register function (event handler) to be called on a mouse press
+  canvas.onmousedown = click;
+
+  // Specify the color for clearing <canvas>
+  gl.clearColor(0.0, 0.0, 0.0, 1.0);
+
+  // Clear <canvas>
+  gl.clear(gl.COLOR_BUFFER_BIT);
+}
+
+
 // Setup 'canvas' and 'gl'
 function setupWebGL() {
   // Retrieve <canvas> element
@@ -38,6 +55,7 @@ function setupWebGL() {
     return;
   }
 }
+
 
 // Compile shaders and get variable locations
 function setupShadersWithVariables() {
@@ -62,21 +80,6 @@ function setupShadersWithVariables() {
   }
 }
 
-function main() {
-  
-  setupWebGL();
-  setupShadersWithVariables();
-
-  // Register function (event handler) to be called on a mouse press
-  canvas.onmousedown = click;
-
-  // Specify the color for clearing <canvas>
-  gl.clearColor(0.0, 0.0, 0.0, 1.0);
-
-  // Clear <canvas>
-  gl.clear(gl.COLOR_BUFFER_BIT);
-}
-
 // Handle a click event
 function click(ev) {
   var x = ev.clientX; // x coordinate of a mouse pointer
@@ -89,17 +92,13 @@ function click(ev) {
 
   // Store the coordinates to g_points array
   g_points.push([x, y]);
-  // Store the coordinates to g_points array
-  if (x >= 0.0 && y >= 0.0) {      // First quadrant
-    g_colors.push([1.0, 0.0, 0.0, 1.0]);  // Red
-  } else if (x < 0.0 && y < 0.0) { // Third quadrant
-    g_colors.push([0.0, 1.0, 0.0, 1.0]);  // Green
-  } else {                         // Others
-    g_colors.push([1.0, 1.0, 1.0, 1.0]);  // White
-  }
+  // Get color from HTML DOM
+  var color = getColorInput();
+  g_colors.push(color);
 
   renderAllShapes();
 }
+
 
 // Renders all shapes tracked by g_points
 function renderAllShapes() {
@@ -119,4 +118,17 @@ function renderAllShapes() {
     // Draw
     gl.drawArrays(gl.POINTS, 0, 1);
   }
+}
+
+
+// returns color (array [r,g,b,a]) from HTML DOM inputs
+function getColorInput() {
+  let color = new Array(4);
+
+  color[0] = document.getElementById("color_r").value;
+  color[1] = document.getElementById("color_g").value;
+  color[2] = document.getElementById("color_b").value;
+  color[3] = 1;
+
+  return color;
 }

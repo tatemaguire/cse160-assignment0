@@ -1,14 +1,16 @@
 class Triangle {
   centerX;
   centerY;
+  size;
   color;
 
   _vertexBuffer;
   _numVertices = 3;
 
-  constructor(centerX, centerY, color) {
+  constructor(centerX, centerY, size, color) {
     this.centerX = centerX;
     this.centerY = centerY;
+    this.size = size;
     this.color = color;
   }
 
@@ -16,6 +18,7 @@ class Triangle {
     this.initVertexBuffer(gl, a_Position);
     let rgba = this.color;
     gl.uniform4f(u_FragColor, rgba[0], rgba[1], rgba[2], rgba[3]);
+
     gl.drawArrays(gl.TRIANGLES, 0, this._numVertices);
     gl.disableVertexAttribArray(a_Position);
   }
@@ -23,12 +26,12 @@ class Triangle {
   initVertexBuffer(gl, a_Position) {
     // Triangle shape before offset
     let vertices = new Float32Array([
-      0, 0.5,   -0.5, -0.5,   0.5, -0.5
+      0, 0.005,   -0.005, -0.005,   0.005, -0.005
     ]);
-    // Apply centerXY offset
+    // Apply size and centerXY offset
     for (let i = 0; i < vertices.length; i += 2) {
-      vertices[i] += this.centerX;
-      vertices[i+1] += this.centerY;
+      vertices[i]   = vertices[i]   * this.size + this.centerX;
+      vertices[i+1] = vertices[i+1] * this.size + this.centerY;
     }
 
     // Create a buffer object

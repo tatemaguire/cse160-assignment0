@@ -126,7 +126,8 @@ function drawShapeAtEvent(ev) {
       shapesList.push(point);
       break;
     case "triangle":
-      let tri = new Triangle(x, y, color);
+      // draw triangle
+      let tri = new Triangle(x, y, pointSize, color);
       shapesList.push(tri);
       break;
   }

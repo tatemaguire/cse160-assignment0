@@ -36,7 +36,8 @@ function main() {
   setupShadersWithVariables();
 
   // Register function (event handler) to be called on a mouse press
-  canvas.onmousedown = click;
+  canvas.onmousedown = drawPointAtEvent;
+  canvas.onmousemove = handleMouseMotion;
 
   document.getElementById("clear_button").onmousedown = clearCanvas;
 
@@ -92,8 +93,18 @@ function setupShadersWithVariables() {
   }
 }
 
+
+// Handle mouse motion. can forward event to drawPointAtEvent
+function handleMouseMotion(ev) {
+  if (ev.buttons === 1) {
+    drawPointAtEvent(ev);
+  }
+}
+
+
 // Handle a click event
-function click(ev) {
+// Draws point at mouse position of event
+function drawPointAtEvent(ev) {
   let x = ev.clientX; // x coordinate of a mouse pointer
   let y = ev.clientY; // y coordinate of a mouse pointer
   let rect = ev.target.getBoundingClientRect();

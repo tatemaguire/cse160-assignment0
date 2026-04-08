@@ -52,7 +52,7 @@ function main() {
 
   // TODO: remove
   // for testing purposes
-  // loadJSON("./peacock.json").then(drawJSON);
+  loadJSON("./peacock.json").then(drawJSON);
 }
 
 
@@ -194,22 +194,22 @@ async function loadJSON(filename) {
 // draws tris from JSON data
 function drawJSON(JSON) {
   // Check validity
-  if (JSON.vertices.length !== JSON.colors.length) {
-    throw new Error("JSON parsing error: vertices.length != colors.length");
+  if (JSON.triangles.length !== JSON.colors.length) {
+    throw new Error("JSON parsing error: triangles.length != colors.length");
   }
 
   // Make data easier to index
-  const verts = JSON.vertices;
+  const tris = JSON.triangles;
   const colors = JSON.colors;
 
-  for (let i = 0; i < verts.length; i++) {
+  for (let i = 0; i < tris.length; i++) {
     // Check validity of this vertex
-    if (verts[i].length !== 6 || colors[i].length !== 4) {
+    if (tris[i].length !== 6 || colors[i].length !== 4) {
       throw new Error("JSON parsing error: vertex " + i + " is invalid");
     }
 
     // Create tri and add to shapesList
-    let tri = new Triangle(verts[i], colors[i]);
+    let tri = new Triangle(tris[i], colors[i]);
     shapesList.push(tri);
   }
 

@@ -4,12 +4,14 @@ class Point {
     pointSize;
     color;
 
+    
     constructor(x, y, pointSize, color) {
         this.x = x;
         this.y = y;
         this.pointSize = pointSize;
         this.color = color;
     }
+
 
     render(gl, a_Position, a_PointSize, u_FragColor) {
         // Send point data to GPU

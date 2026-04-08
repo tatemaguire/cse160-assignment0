@@ -4,11 +4,13 @@ class Triangle {
   _vertices;
   _numVertices;
 
+  
   constructor(vertices, color) {
     this.color = color;
-    this._vertices = vertices;
+    this._vertices = new Float32Array(vertices);
     this._numVertices = 3;
   }
+
 
   render(gl, a_Position, a_PointSize, u_FragColor) {
     // Prep buffer, store vertices inside it
@@ -23,6 +25,7 @@ class Triangle {
     gl.drawArrays(gl.TRIANGLES, 0, this._numVertices);
     gl.disableVertexAttribArray(a_Position);
   }
+
 
   // Prep buffer, store vertices inside it
   _initVertexBuffer(gl, a_Position) {

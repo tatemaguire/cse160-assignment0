@@ -1,14 +1,16 @@
 class Circle {
     color;
-    
+
     _vertices;
     _numVertices;
+
 
     constructor(centerX, centerY, radius, segments, color) {
         this._color = color;
 
         this._calculateVertices(centerX, centerY, radius, segments);
     }
+
 
     render(gl, a_Position, a_PointSize, u_FragColor) {
         this._initVertexBuffer(gl, a_Position);
@@ -22,6 +24,7 @@ class Circle {
         gl.drawArrays(gl.TRIANGLE_FAN, 0, this._numVertices);
         gl.disableVertexAttribArray(a_Position);
     }
+
 
     // Calculate vertices and store them in _vertices, _numVertices
     _calculateVertices(centerX, centerY, radius, segments) {
@@ -58,6 +61,7 @@ class Circle {
         this._numVertices = n;
     }
 
+    
     // Initialize buffers with vertex data, assigned to a_Position
     _initVertexBuffer(gl, a_Position) {
         // Create buffer

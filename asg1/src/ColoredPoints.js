@@ -40,12 +40,19 @@ function main() {
   canvas.onmousemove = handleMouseMotion;
 
   document.getElementById("clear_button").onmousedown = clearCanvas;
+  document.getElementById("draw_peacock_button").onmousedown = () => {
+    loadJSON("./peacock.json").then(drawJSON);
+  };
 
   // Specify the color for clearing <canvas>
   gl.clearColor(0.0, 0.0, 0.0, 1.0);
 
   // Clear <canvas>
   gl.clear(gl.COLOR_BUFFER_BIT);
+
+  // TODO: remove
+  // for testing purposes
+  // loadJSON("./peacock.json").then(drawJSON);
 }
 
 
@@ -170,5 +177,41 @@ function getColorInput() {
 // empties shapesList and redraws
 function clearCanvas() {
   shapesList = [];
+  renderAllShapes();
+}
+
+
+// Load JSON data, returns promise
+async function loadJSON(filename) {
+  const request = new Request(filename);
+  const response = await fetch(request);
+  const JSON = await response.json();
+
+  return JSON;
+}
+
+
+// draws tris from JSON data
+function drawJSON(JSON) {
+  // Check validity
+  if (JSON.vertices.length !== JSON.colors.length) {
+    throw new Error("JSON parsing error: vertices.length != colors.length");
+  }
+
+  // Make data easier to index
+  const verts = JSON.vertices;
+  const colors = JSON.colors;
+
+  for (let i = 0; i < verts.length; i++) {
+    // Check validity of this vertex
+    if (verts[i].length !== 6 || colors[i].length !== 4) {
+      throw new Error("JSON parsing error: vertex " + i + " is invalid");
+    }
+
+    // Create tri and add to shapesList
+    let tri = new Triangle(verts[i], colors[i]);
+    shapesList.push(tri);
+  }
+
   renderAllShapes();
 }

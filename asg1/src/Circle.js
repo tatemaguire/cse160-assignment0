@@ -1,5 +1,6 @@
 class Circle {
-    _color;
+    color;
+    
     _vertices;
     _numVertices;
 

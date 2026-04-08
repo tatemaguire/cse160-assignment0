@@ -128,7 +128,7 @@ function drawShapeAtEvent(ev) {
       break;
     case "triangle":
       // draw triangle
-      let tri = new Triangle(x, y, shapeSize, color);
+      let tri = new EquilateralTriangle(x, y, shapeSize, color);
       shapesList.push(tri);
       break;
     case "circle":

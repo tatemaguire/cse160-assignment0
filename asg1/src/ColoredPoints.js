@@ -49,10 +49,6 @@ function main() {
 
   // Clear <canvas>
   gl.clear(gl.COLOR_BUFFER_BIT);
-
-  // TODO: remove
-  // for testing purposes
-  loadJSON("./peacock.json").then(drawJSON);
 }
 
 
@@ -172,7 +168,7 @@ function getColorInput() {
   color[0] = document.getElementById("color_r").value;
   color[1] = document.getElementById("color_g").value;
   color[2] = document.getElementById("color_b").value;
-  color[3] = 1;
+  color[3] = document.getElementById("color_a").value;
 
   return color;
 }
